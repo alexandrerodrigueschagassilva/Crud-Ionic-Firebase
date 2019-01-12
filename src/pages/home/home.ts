@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
 import { ContactProvider } from '../../providers/contact/contact';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'page-home',
@@ -12,18 +9,23 @@ import { map } from 'rxjs/operators';
 export class HomePage {
 
   contacts:any;
-  itemsRef: AngularFireList<any>;
-  items: Observable<any[]>;
 
   constructor(
     public navCtrl: NavController,
     private provider: ContactProvider,
     private toast: ToastController
     ) {
+    //Recupera todos os registros
     this.contacts = this.provider.getAll();    
   }
 
   newContact(){
     this.navCtrl.push('paginaContato');
+  }
+  removecontact(key: string){
+    this.provider.remove(key);
+  }
+  editContact(contact: any){
+    this.navCtrl.push('paginaContato', {contact:contact});
   }
 }

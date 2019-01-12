@@ -12,10 +12,11 @@ export class ContactProvider {
   itemsRef: AngularFireList<any>;
   items: Observable<any[]>;
 
-  constructor(private db:AngularFireDatabase ) { }
+  constructor(private db:AngularFireDatabase ) { 
+    this.itemsRef = this.db.list('contacts/', ref => ref.orderByChild('name'));// ordena pelo nome
+  }
 
   getAll(){
-    this.itemsRef = this.db.list('contacts/');    
     this.items = this.itemsRef.snapshotChanges().pipe(
       map(changes => 
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
@@ -24,15 +25,19 @@ export class ContactProvider {
     return this.items;  
   }
 
-  /*
+  
   get(key: string){
-    return this.db.object(this.PATH + key)
-      .snapshotChanges()
-      .map(c => {
-        return { key: c.key, ...c.payload.val() }
-      });
+    this.itemRef = this.db.list('contacts/' + key); 
+    
+    this.items = this.itemRef.snapshotChanges().pipe(
+      map(changes => 
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
+    );
+
+    return this.items;
   }
-  */
+  
   save(contact: any){
 
     let parameters = {

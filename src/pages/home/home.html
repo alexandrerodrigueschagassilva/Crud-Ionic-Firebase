@@ -8,11 +8,29 @@
 
 <ion-content padding>
 
-  <ul>
-    <li *ngFor="let item of contacts | async">
-      {{item.name}}
-    </li>
-  </ul>
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of contacts | async">
+      <ion-item>
+        <h3>{{item.name | uppercase}}</h3>
+        <p>
+          <small>{{item.tel}}</small>
+        </p>
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button color="secondary" (click)="editContact(item)">
+          <ion-icon name="create"></ion-icon>
+        </button>
+      </ion-item-options>
+      <ion-item-options>
+        <button ion-button color="danger" (click)="removecontact(item.key)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    
+
+  </ion-list>
  
   <ion-fab bottom right>
     <button ion-fab color="primary" (click)="newContact()">
