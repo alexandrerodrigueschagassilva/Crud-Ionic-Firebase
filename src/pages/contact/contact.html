@@ -1,0 +1,23 @@
+<ion-header>
+
+  <ion-navbar  color="primary">
+    <ion-title>contact</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <form  [formGroup]="formContact" >
+    <ion-item>
+      <ion-label>Nome</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Telefone</ion-label>
+      <ion-input type="number" formControlName="tel"></ion-input>
+    </ion-item>
+    <div padding>
+      <button ion-button block type="submit" [disabled]="formContact.invalid" (click)="onSubmit()">ENVIAR</button>
+    </div>
+  </form>
+</ion-content>
